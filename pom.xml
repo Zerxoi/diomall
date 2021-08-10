@@ -19,5 +19,8 @@
         <module>diomall-order</module>
         <module>diomall-product</module>
         <module>diomall-ware</module>
+        <module>renren-fast</module>
+        <module>renren-generator</module>
+        <module>diomall-common</module>
     </modules>
 </project>
