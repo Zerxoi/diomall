@@ -10,7 +10,7 @@ import lombok.Data;
 /**
  * spu信息介绍
  * 
- * @author chenshun
+ * @author zerxoi
  * @email zerxoi1997@gmail.com
  * @date 2021-08-11 00:44:37
  */

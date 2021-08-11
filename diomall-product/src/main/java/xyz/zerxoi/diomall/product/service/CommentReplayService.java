@@ -9,7 +9,7 @@ import java.util.Map;
 /**
  * 商品评价回复关系
  *
- * @author chenshun
+ * @author zerxoi
  * @email zerxoi1997@gmail.com
  * @date 2021-08-11 00:44:37
  */

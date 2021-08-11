@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 /**
  * 商品属性
  * 
- * @author chenshun
+ * @author zerxoi
  * @email zerxoi1997@gmail.com
  * @date 2021-08-11 00:44:36
  */

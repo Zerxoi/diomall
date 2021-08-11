@@ -18,7 +18,7 @@ import xyz.zerxoi.diomall.product.service.SpuInfoService;
 /**
  * spu信息
  *
- * @author chenshun
+ * @author zerxoi
  * @email zerxoi1997@gmail.com
  * @date 2021-08-11 01:21:29
  */

@@ -19,7 +19,7 @@ import xyz.zerxoi.diomall.product.service.CategoryBrandRelationService;
 /**
  * 品牌分类关联
  *
- * @author chenshun
+ * @author zerxoi
  * @email zerxoi1997@gmail.com
  * @date 2021-08-11 01:21:29
  */

@@ -19,7 +19,7 @@ import xyz.zerxoi.diomall.product.service.AttrGroupService;
 /**
  * 属性分组
  *
- * @author chenshun
+ * @author zerxoi
  * @email zerxoi1997@gmail.com
  * @date 2021-08-11 01:21:29
  */
