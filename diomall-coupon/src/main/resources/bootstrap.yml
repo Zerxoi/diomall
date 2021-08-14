@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: diomall-coupon
+  cloud:
+    nacos:
+      config:
+        server-addr: 127.0.0.1:8848
+        file-extension: yml
+        namespace: 3b9338e1-6eb3-4fab-b211-2bcfb016486a
+        group: dev

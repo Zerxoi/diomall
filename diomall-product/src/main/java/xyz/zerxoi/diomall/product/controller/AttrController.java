@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,11 +25,22 @@ import xyz.zerxoi.diomall.product.service.AttrService;
  * @email zerxoi1997@gmail.com
  * @date 2021-08-11 01:21:29
  */
+@RefreshScope
 @RestController
 @RequestMapping("product/attr")
 public class AttrController {
     @Autowired
     private AttrService attrService;
+
+    @Value("${diomall.user.name}")
+    private String name;
+    @Value("${diomall.user.age}")
+    private Integer age;
+
+    @RequestMapping("/config")
+    public R config() {
+        return R.ok().put("name", name).put("age", age);
+    }
 
     /**
      * 列表

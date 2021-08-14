@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: diomall-order
+  cloud:
+    nacos:
+      config:
+        server-addr: 127.0.0.1:8848
+        file-extension: yml
+        namespace: 4974ab31-50f3-4079-8628-abeea9a261e2
+        group: dev
