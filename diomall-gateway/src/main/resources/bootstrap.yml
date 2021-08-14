@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: diomall-gateway
+  cloud:
+    nacos:
+      config:
+        server-addr: 127.0.0.1:8848
+        file-extension: yml
+        namespace: f06dbb11-4bdd-4b5a-9226-bfd0a706f4d8
+        group: dev
+        extension-configs:
+          - data-id: spring-cloud.yml
+            group: dev
+            refresh: true
+          - data-id: misc.yml
+            group: dev
+            refresh: true
+          - data-id: gateway.yml
+            group: dev
+            refresh: true

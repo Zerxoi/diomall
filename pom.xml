@@ -31,6 +31,7 @@
         <module>renren-fast</module>
         <module>renren-generator</module>
         <module>diomall-common</module>
+        <module>diomall-gateway</module>
     </modules>
 
     <dependencyManagement>
