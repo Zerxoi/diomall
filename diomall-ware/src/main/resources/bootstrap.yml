@@ -8,3 +8,13 @@ spring:
         file-extension: yml
         namespace: 4f61be41-ecf9-4dbc-920b-7aa5eb0e26d8
         group: dev
+        extension-configs:
+          - data-id: datasource.yml
+            group: dev
+            refresh: true
+          - data-id: spring-cloud.yml
+            group: dev
+            refresh: true
+          - data-id: misc.yml
+            group: dev
+            refresh: true
