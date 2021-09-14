@@ -29,6 +29,11 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
+    @RequestMapping("/list/tree")
+    public R listTree() {
+        return R.ok().put("data", categoryService.listTree());
+    }
+
     /**
      * 列表
      */
