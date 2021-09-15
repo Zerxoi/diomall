@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: diomall-third-party
+  cloud:
+    nacos:
+      config:
+        server-addr: 127.0.0.1:8848
+        file-extension: yml
+        namespace: cf593a00-c774-4825-83fd-3c6b516761db
+        extension-configs:
+          - dataId: misc.yml
+            group: dev
+            refresh: true
+          - dataId: spring-cloud.yml
+            group: dev
+            refresh: true
+
+    alicloud:
+      oss:
+        endpoint:

@@ -32,6 +32,7 @@
         <module>renren-generator</module>
         <module>diomall-common</module>
         <module>diomall-gateway</module>
+        <module>diomall-third-party</module>
     </modules>
 
     <dependencyManagement>
