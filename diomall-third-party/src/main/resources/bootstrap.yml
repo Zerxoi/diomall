@@ -14,7 +14,3 @@ spring:
           - dataId: spring-cloud.yml
             group: dev
             refresh: true
-
-    alicloud:
-      oss:
-        endpoint:
