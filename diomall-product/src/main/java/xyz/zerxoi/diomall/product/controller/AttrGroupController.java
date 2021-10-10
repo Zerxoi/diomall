@@ -3,6 +3,7 @@ package xyz.zerxoi.diomall.product.controller;
 import java.util.Arrays;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -10,7 +11,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+
 import xyz.zerxoi.common.utils.PageUtils;
+import xyz.zerxoi.common.utils.Query;
 import xyz.zerxoi.common.utils.R;
 import xyz.zerxoi.diomall.product.entity.AttrGroupEntity;
 import xyz.zerxoi.diomall.product.service.AttrGroupService;
@@ -29,16 +34,16 @@ public class AttrGroupController {
     @Autowired
     private AttrGroupService attrGroupService;
 
-    /**
-     * 列表
-     */
-    @RequestMapping("/list")
-    public R list(@RequestParam Map<String, Object> params) {
-        PageUtils page = attrGroupService.queryPage(params);
-
-        return R.ok().put("page", page);
+    @RequestMapping("/list/{catId}")
+    public R listByCatId(@RequestParam Map<String, Object> params, @PathVariable("catId") Long catId) {
+        String key = (String) params.get("key");
+        IPage<AttrGroupEntity> page = attrGroupService.page(new Query<AttrGroupEntity>().getPage(params),
+                new LambdaQueryWrapper<AttrGroupEntity>()
+                        .eq(catId != null && catId > 0, AttrGroupEntity::getCatelogId, catId)
+                        .and(StringUtils.isNotBlank(key), w -> w.eq(AttrGroupEntity::getAttrGroupId, key).or()
+                                .like(AttrGroupEntity::getAttrGroupName, key)));
+        return R.ok().put("page", new PageUtils(page));
     }
-
 
     /**
      * 信息

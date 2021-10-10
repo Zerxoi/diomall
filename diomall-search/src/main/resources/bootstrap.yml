@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: diomall-search
+  cloud:
+    nacos:
+      config:
+        server-addr: 127.0.0.1:8848
+        file-extension: yml
+        namespace: 3511cd46-aa65-498e-b82b-a1506bbc9539
+        group: dev
+        extension-configs:
+          - dataId: misc.yml
+            group: dev
+            refresh: true
+          - dataId: spring-cloud.yml
+            group: dev
+            refresh: true
+          - dataId: redis.yml
+            group: dev
+            refresh: true

@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -25,19 +27,27 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
     public PageUtils queryPage(Map<String, Object> params) {
         IPage<CategoryEntity> page = this.page(
                 new Query<CategoryEntity>().getPage(params),
-                new QueryWrapper<CategoryEntity>()
+                new QueryWrapper<>()
         );
 
         return new PageUtils(page);
     }
 
     @Override
+    // sync = true 添加本地锁 预防缓存击穿
+    @Cacheable(cacheNames = "category", key = "'tree'", sync = true)
     public List<CategoryEntity> listTree() {
         List<CategoryEntity> categoryEntities = baseMapper.selectList(null);
         return categoryEntities.stream().filter(categoryEntity -> categoryEntity.getParentCid() == 0)
                 .peek(entity -> entity.setChildren(getChildren(entity, categoryEntities)))
                 .sorted(Comparator.comparingInt(o -> (o.getSort() == null ? 0 : o.getSort())))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    // 清空 category 缓存名中的所有 key
+    @CacheEvict(cacheNames = "category", key = "'tree'", allEntries = true)
+    public void updateTree() {
     }
 
     private List<CategoryEntity> getChildren(CategoryEntity parent, List<CategoryEntity> all) {

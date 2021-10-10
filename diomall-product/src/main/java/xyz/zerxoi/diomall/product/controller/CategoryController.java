@@ -1,14 +1,21 @@
 package xyz.zerxoi.diomall.product.controller;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
 
 import xyz.zerxoi.common.utils.PageUtils;
 import xyz.zerxoi.common.utils.R;
@@ -27,12 +34,38 @@ import xyz.zerxoi.diomall.product.service.CategoryService;
 @RequestMapping("product/category")
 public class CategoryController {
     @Autowired
+    StringRedisTemplate stringRedisTemplate;
+
+    @Autowired
     private CategoryService categoryService;
 
     @RequestMapping("/list/tree")
     public R listTree() {
         return R.ok().put("data", categoryService.listTree());
     }
+
+    @RequestMapping("/update/tree")
+    public R updateTree() {
+        categoryService.updateTree();
+        return R.ok();
+    }
+
+    @RequestMapping("/list/tree/cache")
+    public R listTreeCache() {
+        ValueOperations<String, String> ops = stringRedisTemplate.opsForValue();
+        String categoryTree = ops.get("category_tree");
+        List<CategoryEntity> categoryEntities;
+        if (StringUtils.isNotEmpty(categoryTree)) {
+            categoryEntities = JSON.parseObject(categoryTree, new TypeReference<List<CategoryEntity>>() {
+            });
+        } else {
+            categoryEntities = categoryService.listTree();
+            String s = JSON.toJSONString(categoryEntities);
+            ops.set("category_tree", s);
+        }
+        return R.ok().put("data", categoryEntities);
+    }
+
 
     /**
      * 列表
