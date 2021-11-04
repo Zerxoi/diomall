@@ -14,3 +14,9 @@ spring:
           - dataId: spring-cloud.yml
             group: dev
             refresh: true
+          - dataId: oss.yml
+            group: dev
+            refresh: true
+          - dataId: sms.yml
+            group: dev
+            refresh: true

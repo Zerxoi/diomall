@@ -35,6 +35,7 @@
         <module>diomall-gateway</module>
         <module>diomall-third-party</module>
         <module>diomall-search</module>
+        <module>diomall-auth</module>
     </modules>
 
     <dependencyManagement>

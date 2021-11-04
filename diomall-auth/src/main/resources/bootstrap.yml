@@ -15,6 +15,6 @@ spring:
           - dataId: spring-cloud.yml
             group: dev
             refresh: true
-          - dataId: sms.yml
+          - dataId: cache.yml
             group: dev
             refresh: true

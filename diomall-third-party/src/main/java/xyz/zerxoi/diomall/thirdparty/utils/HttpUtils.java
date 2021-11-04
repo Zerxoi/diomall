@@ -1,4 +1,4 @@
-package xyz.zerxoi.diomall.auth.utils;
+package xyz.zerxoi.diomall.thirdparty.utils;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.http.HttpResponse;

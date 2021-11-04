@@ -1,18 +1,18 @@
-package xyz.zerxoi.diomall.auth.component;
+package xyz.zerxoi.diomall.thirdparty.service;
 
 import lombok.Data;
 import org.apache.http.HttpResponse;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component;
-import xyz.zerxoi.diomall.auth.utils.HttpUtils;
+import org.springframework.stereotype.Service;
+import xyz.zerxoi.diomall.thirdparty.utils.HttpUtils;
 
 import java.util.HashMap;
 import java.util.Map;
 
 @Data
-@Component
-@ConfigurationProperties("spring.alicloud.sms")
-public class SmsComponent {
+@Service
+@ConfigurationProperties("spring.cloud.alicloud.sms")
+public class SmsService {
     private String host;
     private String path;
     private String method;
@@ -20,7 +20,7 @@ public class SmsComponent {
     private Integer expireAt;
     private String templateId;
 
-    public void sendSms(String phoneNumber, String code) {
+    public void sendSms(String phoneNumber, String code) throws Exception {
         Map<String, String> headers = new HashMap<>();
         headers.put("Authorization", "APPCODE " + appcode);
         headers.put("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
@@ -30,11 +30,6 @@ public class SmsComponent {
         bodies.put("phone_number", phoneNumber);
         bodies.put("template_id", templateId);
 
-        try {
-            HttpResponse response = HttpUtils.doPost(host, path, method, headers, queries, bodies);
-            System.out.println(response.toString());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        HttpUtils.doPost(host, path, method, headers, queries, bodies);
     }
 }
