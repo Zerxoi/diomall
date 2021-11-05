@@ -18,3 +18,6 @@ spring:
           - dataId: cache.yml
             group: dev
             refresh: true
+          - dataId: oauth.yml
+            group: dev
+            refresh: true

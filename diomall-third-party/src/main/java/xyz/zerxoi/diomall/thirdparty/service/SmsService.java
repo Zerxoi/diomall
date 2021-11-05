@@ -15,7 +15,6 @@ import java.util.Map;
 public class SmsService {
     private String host;
     private String path;
-    private String method;
     private String appcode;
     private Integer expireAt;
     private String templateId;
@@ -30,6 +29,6 @@ public class SmsService {
         bodies.put("phone_number", phoneNumber);
         bodies.put("template_id", templateId);
 
-        HttpUtils.doPost(host, path, method, headers, queries, bodies);
+        HttpUtils.doPost(host, path, headers, queries, bodies);
     }
 }
