@@ -21,3 +21,6 @@ spring:
           - data-id: cache.yml
             group: dev
             refresh: true
+          - dataId: session.yml
+            group: dev
+            refresh: true

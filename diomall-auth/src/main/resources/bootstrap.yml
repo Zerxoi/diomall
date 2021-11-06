@@ -21,3 +21,6 @@ spring:
           - dataId: oauth.yml
             group: dev
             refresh: true
+          - dataId: session.yml
+            group: dev
+            refresh: true
