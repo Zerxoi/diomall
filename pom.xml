@@ -36,6 +36,9 @@
         <module>diomall-third-party</module>
         <module>diomall-search</module>
         <module>diomall-auth</module>
+        <module>diomall-sso-server</module>
+        <module>diomall-sso-client</module>
+        <module>diomall-sso-client2</module>
     </modules>
 
     <dependencyManagement>

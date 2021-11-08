@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: diomall-sso-server
+  cloud:
+    nacos:
+      config:
+        server-addr: 127.0.0.1:8848
+        file-extension: yml
+        namespace: 93a39699-9491-4c16-8ef3-a632a5fd7df7
+        group: dev
+        extension-configs:
+          - data-id: spring-cloud.yml
+            group: dev
+            refresh: true
+          - data-id: misc.yml
+            group: dev
+            refresh: true
