@@ -17,6 +17,9 @@ import xyz.zerxoi.common.utils.R;
 import xyz.zerxoi.diomall.member.entity.MemberEntity;
 import xyz.zerxoi.diomall.member.feign.CouponFeignService;
 import xyz.zerxoi.diomall.member.service.MemberService;
+import xyz.zerxoi.diomall.member.vo.GithubUserVo;
+import xyz.zerxoi.diomall.member.vo.MemberLoginVo;
+import xyz.zerxoi.diomall.member.vo.MemberRegisterVo;
 
 
 /**
@@ -101,6 +104,27 @@ public class MemberController {
         memberService.removeByIds(Arrays.asList(ids));
 
         return R.ok();
+    }
+
+    @RequestMapping("/register")
+    public R register(@RequestBody MemberRegisterVo registerVo) {
+        memberService.register(registerVo);
+        return R.ok();
+    }
+
+    @RequestMapping("/login")
+    public R login(@RequestBody MemberLoginVo loginVo) {
+        MemberEntity memberEntity = memberService.login(loginVo);
+        if (memberEntity == null) {
+            return R.error("登陆失败");
+        }
+        return R.ok().put("data", memberEntity);
+    }
+
+    @RequestMapping("/github/login")
+    public R login(@RequestBody GithubUserVo githubUserVo) {
+        MemberEntity memberEntity = memberService.login(githubUserVo);
+        return R.ok().put("data", memberEntity);
     }
 
 }

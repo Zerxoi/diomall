@@ -1,4 +1,4 @@
-package xyz.zerxoi.diomall.auth.vo;
+package xyz.zerxoi.diomall.member.vo;
 
 import lombok.Data;
 
@@ -36,4 +36,5 @@ public class GithubUserVo {
     private Integer following;
     private String createdAt;
     private String updatedAt;
+
 }

@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: diomall-cart
+  cloud:
+    nacos:
+      config:
+        server-addr: 127.0.0.1:8848
+        file-extension: yml
+        namespace: 4720531e-bf43-41b9-a668-2e528fec03d6
+        group: dev
+        extension-configs:
+          - data-id: spring-cloud.yml
+            group: dev
+            refresh: true
+          - data-id: misc.yml
+            group: dev
+            refresh: true

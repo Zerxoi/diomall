@@ -39,6 +39,7 @@
         <module>diomall-sso-server</module>
         <module>diomall-sso-client</module>
         <module>diomall-sso-client2</module>
+        <module>diomall-cart</module>
     </modules>
 
     <dependencyManagement>
