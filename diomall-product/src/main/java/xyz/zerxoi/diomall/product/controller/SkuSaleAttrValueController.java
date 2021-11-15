@@ -1,19 +1,17 @@
 package xyz.zerxoi.diomall.product.controller;
 
-import java.util.Arrays;
-import java.util.Map;
-
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.bind.annotation.*;
 import xyz.zerxoi.common.utils.PageUtils;
 import xyz.zerxoi.common.utils.R;
 import xyz.zerxoi.diomall.product.entity.SkuSaleAttrValueEntity;
 import xyz.zerxoi.diomall.product.service.SkuSaleAttrValueService;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 
 /**
@@ -80,4 +78,10 @@ public class SkuSaleAttrValueController {
         return R.ok();
     }
 
+    @GetMapping("/stringlist/{skuId}")
+    public List<String> getSkuSaleAttrValue(@PathVariable("skuId") Long skuId) {
+        List<SkuSaleAttrValueEntity> list =
+                skuSaleAttrValueService.list(new LambdaQueryWrapper<SkuSaleAttrValueEntity>().eq(SkuSaleAttrValueEntity::getSkuId, skuId));
+        return list.stream().map(entity -> entity.getAttrName() + ":" + entity.getAttrValue()).collect(Collectors.toList());
+    }
 }

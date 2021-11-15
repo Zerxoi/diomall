@@ -1,6 +1,5 @@
 package xyz.zerxoi.diomall.cart.interceptor;
 
-import lombok.Data;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -55,7 +54,7 @@ public class CartInterceptor implements HandlerInterceptor {
     }
 
     @Override
-    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
+    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) {
         if (!threadLocal.get().isUserKeyInCookie()) {
             Cookie cookie = new Cookie(CartConstant.TEMP_USER_COOKIE, threadLocal.get().getUserKey());
             cookie.setMaxAge(CartConstant.COOKIE_MAX_AGE);
