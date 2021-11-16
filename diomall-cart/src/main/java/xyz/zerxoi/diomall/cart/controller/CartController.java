@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 import xyz.zerxoi.common.utils.R;
 import xyz.zerxoi.diomall.cart.interceptor.CartInterceptor;
 import xyz.zerxoi.diomall.cart.service.CartService;
+import xyz.zerxoi.diomall.cart.vo.CartItem;
 import xyz.zerxoi.diomall.cart.vo.UserInfoTo;
 
 import javax.servlet.http.HttpSession;
@@ -28,7 +29,7 @@ public class CartController {
     @GetMapping("/addToCart")
     public R addToCart(@RequestParam("skuId") Long skuId, @RequestParam("num") Integer num) throws ExecutionException
             , InterruptedException {
-        cartService.addToCart(skuId, num);
-        return R.ok();
+        CartItem cartItem = cartService.addToCart(skuId, num);
+        return R.ok().put("data", cartItem);
     }
 }

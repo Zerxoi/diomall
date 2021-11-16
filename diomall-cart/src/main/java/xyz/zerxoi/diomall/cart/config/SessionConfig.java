@@ -9,14 +9,16 @@ import org.springframework.session.web.http.DefaultCookieSerializer;
 
 @Configuration
 public class SessionConfig {
+    // 使用 CookieSerializer 将Session域设置为父域
     @Bean
     public CookieSerializer cookieSerializer() {
         DefaultCookieSerializer serializer = new DefaultCookieSerializer();
         serializer.setCookieName("DIOSESSIONID");
-        serializer.setDomainNamePattern("diomall.com");
+        serializer.setDomainNamePattern(".diomall.com");
         return serializer;
     }
 
+    // 设置 Redis Session 序列化机制
     @Bean
     public RedisSerializer<Object> springSessionDefaultRedisSerializer() {
         return new GenericJackson2JsonRedisSerializer();

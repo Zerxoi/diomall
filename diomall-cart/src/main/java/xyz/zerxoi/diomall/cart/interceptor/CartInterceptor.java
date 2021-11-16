@@ -48,19 +48,31 @@ public class CartInterceptor implements HandlerInterceptor {
             userInfoTo.setUserKey(userKey);
         }
 
+        // 放入 ThreadLocal
         threadLocal.set(userInfoTo);
+
+        // 设置 Cookie
+        if (!userInfoTo.isUserKeyInCookie()) {
+            Cookie cookie = new Cookie(CartConstant.TEMP_USER_COOKIE, userInfoTo.getUserKey());
+            cookie.setMaxAge(CartConstant.COOKIE_MAX_AGE);
+            cookie.setDomain("diomall.com");
+            response.addCookie(cookie);
+        }
         // 全部放行
         return true;
     }
 
     @Override
-    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) {
-        if (!threadLocal.get().isUserKeyInCookie()) {
-            Cookie cookie = new Cookie(CartConstant.TEMP_USER_COOKIE, threadLocal.get().getUserKey());
-            cookie.setMaxAge(CartConstant.COOKIE_MAX_AGE);
-            cookie.setDomain("diomall.com");
-            response.addCookie(cookie);
-        }
-
+    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
+                           ModelAndView modelAndView) {
+        // postHandle 对于@ResponseBody 和 ResponseEntity 方法的用处不大
+        // 在这些方法中，响应是在 HandlerAdapter 内和 postHandle 之前写入和提交的
+        // 这意味着对响应进行任何更改（例如添加额外的标头）为时已晚
+        // if (!threadLocal.get().isUserKeyInCookie()) {
+        //     Cookie cookie = new Cookie(CartConstant.TEMP_USER_COOKIE, threadLocal.get().getUserKey());
+        //     cookie.setMaxAge(CartConstant.COOKIE_MAX_AGE);
+        //     cookie.setDomain("diomall.com");
+        //     response.addCookie(cookie);
+        // }
     }
 }
