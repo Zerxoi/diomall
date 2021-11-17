@@ -1,8 +1,12 @@
 package xyz.zerxoi.diomall.order.controller;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.Map;
+import java.util.UUID;
 
+import org.springframework.amqp.rabbit.connection.CorrelationData;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
@@ -13,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import xyz.zerxoi.diomall.order.entity.OrderEntity;
+import xyz.zerxoi.diomall.order.entity.OrderOperateHistoryEntity;
 import xyz.zerxoi.diomall.order.service.OrderService;
 import xyz.zerxoi.common.utils.PageUtils;
 import xyz.zerxoi.common.utils.R;
@@ -32,6 +37,8 @@ import xyz.zerxoi.common.utils.R;
 public class OrderController {
     @Autowired
     private OrderService orderService;
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
 
     @Value("${diomall.user.name}")
     private String name;
@@ -92,6 +99,21 @@ public class OrderController {
 		orderService.removeByIds(Arrays.asList(ids));
 
         return R.ok();
+    }
+
+    @RequestMapping("/sendMessage")
+    public R sendMessage(){
+        for (int i = 0; i < 10; i++) {
+            OrderOperateHistoryEntity historyEntity = new OrderOperateHistoryEntity();
+            historyEntity.setOrderId(1L);
+            historyEntity.setCreateTime(new Date());
+            historyEntity.setOrderStatus(0);
+            historyEntity.setOperateMan("Jinx");
+            // 如果发送消息是个对象，对象通过序列化机制发送对象
+            rabbitTemplate.convertAndSend("java.exchange", "hello.java", historyEntity,
+                    new CorrelationData(UUID.randomUUID().toString()));
+        }
+        return R.ok("成功");
     }
 
 }
