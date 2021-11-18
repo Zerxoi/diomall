@@ -21,3 +21,6 @@ spring:
           - data-id: rabbitmq.yml
             group: dev
             refresh: true
+  thymeleaf:
+    cache: false
+    prefix: classpath:/templates/
