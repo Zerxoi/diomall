@@ -21,6 +21,18 @@ spring:
           - data-id: rabbitmq.yml
             group: dev
             refresh: true
+          - data-id: session.yml
+            group: dev
+            refresh: true
+          - data-id: threadpool.yml
+            group: dev
+            refresh: true
+          - data-id: redis.yml
+            group: dev
+            refresh: true
+          - dataId: thymeleaf.yml
+            group: dev
+            refresh: true
   thymeleaf:
     cache: false
     prefix: classpath:/templates/

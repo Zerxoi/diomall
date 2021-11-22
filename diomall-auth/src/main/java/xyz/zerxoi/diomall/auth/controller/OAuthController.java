@@ -11,7 +11,7 @@ import xyz.zerxoi.diomall.auth.feign.MemberFeignService;
 import xyz.zerxoi.diomall.auth.service.GithubOAuthService;
 import xyz.zerxoi.diomall.auth.vo.GithubAccessTokenVo;
 import xyz.zerxoi.diomall.auth.vo.GithubUserVo;
-import xyz.zerxoi.diomall.auth.vo.MemberVo;
+import xyz.zerxoi.common.vo.MemberVo;
 
 import javax.servlet.http.HttpSession;
 

@@ -20,7 +20,7 @@ public interface MemberService extends IService<MemberEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
 
-    void register(MemberRegisterVo registerVo);
+    void register(MemberRegisterVo registerVo) throws RuntimeException;
 
     MemberEntity login(MemberLoginVo loginVo);
 

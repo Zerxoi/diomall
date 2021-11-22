@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import xyz.zerxoi.common.utils.R;
 import xyz.zerxoi.diomall.auth.vo.GithubUserVo;
 import xyz.zerxoi.diomall.auth.vo.UserLoginVo;
+import xyz.zerxoi.diomall.auth.vo.UserRegisterVo;
 
 @FeignClient("diomall-member")
 public interface MemberFeignService {
@@ -14,4 +15,7 @@ public interface MemberFeignService {
 
     @RequestMapping("member/member/login")
     R login(@RequestBody UserLoginVo userLoginVo);
+
+    @RequestMapping("member/member/register")
+    R register(@RequestBody UserRegisterVo registerVo) throws RuntimeException;
 }

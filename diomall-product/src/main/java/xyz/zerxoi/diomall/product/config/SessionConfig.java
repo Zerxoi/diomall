@@ -1,4 +1,4 @@
-package xyz.zerxoi.diomall.cart.config;
+package xyz.zerxoi.diomall.product.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -15,3 +15,9 @@ spring:
           - data-id: misc.yml
             group: dev
             refresh: true
+          - data-id: threadpool.yml
+            group: dev
+            refresh: true
+          - data-id: redis.yml
+            group: dev
+            refresh: true

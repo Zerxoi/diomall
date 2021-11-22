@@ -1,4 +1,4 @@
-package xyz.zerxoi.diomall.auth.vo;
+package xyz.zerxoi.common.vo;
 
 import lombok.Data;
 

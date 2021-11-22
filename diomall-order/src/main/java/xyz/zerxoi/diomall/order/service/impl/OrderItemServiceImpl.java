@@ -1,25 +1,23 @@
 package xyz.zerxoi.diomall.order.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.rabbitmq.client.Channel;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Service;
-
-import java.io.IOException;
-import java.util.Map;
-
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import xyz.zerxoi.common.utils.PageUtils;
 import xyz.zerxoi.common.utils.Query;
-
 import xyz.zerxoi.diomall.order.dao.OrderItemDao;
 import xyz.zerxoi.diomall.order.entity.OrderItemEntity;
 import xyz.zerxoi.diomall.order.entity.OrderOperateHistoryEntity;
 import xyz.zerxoi.diomall.order.entity.OrderReturnReasonEntity;
 import xyz.zerxoi.diomall.order.service.OrderItemService;
+
+import java.io.IOException;
+import java.util.Map;
 
 @Service("orderItemService")
 @RabbitListener(queues = {"java-queue"})
@@ -29,7 +27,7 @@ public class OrderItemServiceImpl extends ServiceImpl<OrderItemDao, OrderItemEnt
     public PageUtils queryPage(Map<String, Object> params) {
         IPage<OrderItemEntity> page = this.page(
                 new Query<OrderItemEntity>().getPage(params),
-                new QueryWrapper<OrderItemEntity>()
+                new QueryWrapper<>()
         );
 
         return new PageUtils(page);
@@ -42,17 +40,17 @@ public class OrderItemServiceImpl extends ServiceImpl<OrderItemDao, OrderItemEnt
             // 非批量Ack响应
             System.out.println("响应：" + message);
             channel.basicAck(deliveryTag, false);
-        }
-        else {
+        } else {
             System.out.println("拒绝：" + message);
             channel.basicNack(deliveryTag, false, false);
         }
     }
 
     @RabbitHandler
-    public void receiveOrderReturnReason(OrderReturnReasonEntity body) {
+    public void receiveOrderReturnReason(Message message, OrderReturnReasonEntity body, Channel channel) throws IOException {
         System.out.println("订单退回原因");
         System.out.println(body);
+        channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
     }
 
 }

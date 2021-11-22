@@ -36,12 +36,12 @@ public class MemberServiceImpl extends ServiceImpl<MemberDao, MemberEntity> impl
     }
 
     @Override
-    public void register(MemberRegisterVo registerVo) {
+    public void register(MemberRegisterVo registerVo) throws RuntimeException {
         checkPhoneUnique(registerVo.getPhone());
-        checkUserNameUnique(registerVo.getUserName());
+        checkUserNameUnique(registerVo.getUsername());
 
         MemberEntity entity = new MemberEntity();
-        entity.setUsername(registerVo.getUserName());
+        entity.setUsername(registerVo.getUsername());
         entity.setMobile(registerVo.getPhone());
         entity.setCreateTime(new Date());
         // 密码加密
@@ -72,7 +72,8 @@ public class MemberServiceImpl extends ServiceImpl<MemberDao, MemberEntity> impl
 
     @Override
     public MemberEntity login(GithubUserVo githubUserVo) {
-        MemberEntity member = getOne(new LambdaQueryWrapper<MemberEntity>().eq(MemberEntity::getUid, githubUserVo.getId()));
+        MemberEntity member = getOne(new LambdaQueryWrapper<MemberEntity>().eq(MemberEntity::getUid,
+                githubUserVo.getId()));
         if (member == null) {
             member = new MemberEntity();
             member.setUid(Long.toString(githubUserVo.getId()));
@@ -83,16 +84,14 @@ public class MemberServiceImpl extends ServiceImpl<MemberDao, MemberEntity> impl
         return member;
     }
 
-    private void checkUserNameUnique(String userName) {
+    private void checkUserNameUnique(String userName) throws RuntimeException {
         if (count(new LambdaQueryWrapper<MemberEntity>().eq(MemberEntity::getUsername, userName)) > 0) {
-            // TODO 随便抛出的异常
             throw new RuntimeException("用户名已存在");
         }
     }
 
-    private void checkPhoneUnique(String phone) {
+    private void checkPhoneUnique(String phone) throws RuntimeException {
         if (count(new LambdaQueryWrapper<MemberEntity>().eq(MemberEntity::getMobile, phone)) > 0) {
-            // TODO 随便抛出的异常
             throw new RuntimeException("手机号已存在");
         }
     }
