@@ -23,6 +23,7 @@ import xyz.zerxoi.diomall.auth.vo.UserRegisterVo;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
@@ -135,11 +136,21 @@ public class LoginController {
                     .collect(Collectors.toMap(FieldError::getField, FieldError::getDefaultMessage, (o1, o2) -> o1)));
             return "redirect:http://auth.diomall.com/register.html";
         }
+        String codeTimestamp = redisTemplate.opsForValue().get(SMS_CODE_CACHE_PREFIX + userRegisterVo.getPhone());
+        if (StringUtils.isNotEmpty(codeTimestamp) && codeTimestamp.split(":")[0].equals(userRegisterVo.getCode())) {
+            redisTemplate.delete(SMS_CODE_CACHE_PREFIX + userRegisterVo.getPhone());
+        } else {
+            Map<String,String > errors = new HashMap<>();
+            errors.put("code", "验证码错误");
+            redirectAttributes.addFlashAttribute("errors", errors);
+            return "redirect:http://auth.diomall.com/register.html";
+        }
+
         R register = memberFeignService.register(userRegisterVo);
         if (register.getCode() == 0) {
             return "redirect:http://auth.diomall.com/login.html";
         } else {
-            redirectAttributes.addFlashAttribute("exists", register.getMsg());
+            redirectAttributes.addFlashAttribute("msg", register.getMsg());
             return "redirect:http://auth.diomall.com/register.html";
         }
     }

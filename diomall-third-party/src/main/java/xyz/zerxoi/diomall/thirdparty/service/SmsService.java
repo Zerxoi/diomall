@@ -11,7 +11,7 @@ import java.util.Map;
 
 @Data
 @Service
-@ConfigurationProperties("spring.cloud.alicloud.sms")
+@ConfigurationProperties("spring.alicloud.sms")
 public class SmsService {
     private String host;
     private String path;
