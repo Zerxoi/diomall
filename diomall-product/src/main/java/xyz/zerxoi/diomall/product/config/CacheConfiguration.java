@@ -8,6 +8,7 @@ import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
+import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext.SerializationPair;
 import org.springframework.data.redis.serializer.RedisSerializer;
 
@@ -19,10 +20,10 @@ import org.springframework.data.redis.serializer.RedisSerializer;
 @EnableCaching
 public class CacheConfiguration {
     @Bean
-    public RedisCacheConfiguration redisCacheConfiguration(CacheProperties cacheProperties ) {
+    public RedisCacheConfiguration redisCacheConfiguration(CacheProperties cacheProperties) {
         RedisCacheConfiguration config = RedisCacheConfiguration.defaultCacheConfig();
         // 自定义 value 序列化器
-        config = config.serializeValuesWith(SerializationPair.fromSerializer(RedisSerializer.json()));
+        config = config.serializeValuesWith(SerializationPair.fromSerializer(new GenericJackson2JsonRedisSerializer()));
 
         // 从配置文件获取配置
         Redis redisProperties = cacheProperties.getRedis();

@@ -11,8 +11,9 @@
     <div class="Jdbox_head">
         <img src="/static/order/pay/img/logo1.jpg" alt=""><span class="bank">收银台</span>
         <ul>
-            <li th:if="${session.loginUser != null}"><span>[[${session.loginUser == null?'':session.loginUser.username}]]</span></li>
-            <li th:if="${session.loginUser != null}"><span><a href="http://auth.diomall.com/logout" >退出</a></span></li>
+            <li th:if="${session.loginUser != null}"><span>[[${session.loginUser == null?'':session.loginUser.username}]]</span>
+            </li>
+            <li th:if="${session.loginUser != null}"><a href="http://auth.diomall.com/logout">退出</a></li>
             <li>我的订单</li>
             <li>支付帮助</li>
         </ul>

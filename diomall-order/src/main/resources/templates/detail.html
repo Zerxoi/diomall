@@ -17,7 +17,7 @@
         <div class="min">
             <ul class="header_ul_left">
                 <li class="glyphicon glyphicon-home">
-                    <a href="/static/order/detail/shouye.html" class="aa">谷粒商城首页</a>
+                    <a href="http://diomall.com" class="aa">谷粒商城首页</a>
                 </li>
                 <li class="glyphicon glyphicon-map-marker">
                     <a href="javascript:;">北京</a>
@@ -131,13 +131,16 @@
                 </li>
             </ul>
             <ul class="header_ul_right">
-                <li>
-                    <a th:if="${session.loginUser != null}">欢迎：[[${session.loginUser.username}]]</a>
-                    <a th:if="${session.loginUser == null}" href="http://auth.diomall.com/login.html"
-                       class="aa">你好，请登录</a>
-                </li>
                 <li th:if="${session.loginUser == null}">
-                    <a href="http://auth.diomall.com/register.html" style="color: red;">免费注册</a> |
+                    <a class="aa" href="http://auth.diomall.com/login.html">你好，请登录</a></li>
+                <li th:if="${session.loginUser == null}">
+                    <a class="aa" href="http://auth.diomall.com/register.html">免费注册</a>
+                </li>
+                <li th:if="${session.loginUser != null}" style="width: 60px">
+                    <a class="aa">[[${session.loginUser == null?'':session.loginUser.username}]]</a>
+                </li>
+                <li th:if="${session.loginUser != null}" style="width: 30px">
+                    <a class="aa" href="http://auth.diomall.com/logout">退出</a>
                 </li>
                 <li>
                     <a href="javascript:;" class="aa">我的订单</a> |
@@ -411,7 +414,7 @@
                     <button>搜索</button>
                 </div>
                 <div class="nav_top_three">
-                    <a href="/static/order/detail/../JD_Shop/One_JDshop.html">我的购物车</a><span
+                    <a href="http://cart.diomall.com/cart.html">我的购物车</a><span
                         class="glyphicon glyphicon-shopping-cart"></span>
                     <div class="nav_top_three_1">
                         <img src="/static/order/detail/img/44.png"/>购物车还没有商品，赶紧选购吧！

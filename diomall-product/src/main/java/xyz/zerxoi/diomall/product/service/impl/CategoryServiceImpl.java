@@ -1,5 +1,6 @@
 package xyz.zerxoi.diomall.product.service.impl;
 
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -44,17 +45,36 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
                 .collect(Collectors.toList());
     }
 
-    @Override
-    // 清空 category 缓存名中的所有 key
-    @CacheEvict(cacheNames = "category", key = "'tree'", allEntries = true)
-    public void updateTree() {
-    }
-
     private List<CategoryEntity> getChildren(CategoryEntity parent, List<CategoryEntity> all) {
         return all.stream().filter(entity -> entity.getParentCid().equals(parent.getCatId()))
                 .peek(entity -> entity.setChildren(getChildren(entity, all)))
                 .sorted(Comparator.comparingInt(o -> (o.getSort() == null ? 0 : o.getSort())))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    // 清空 category 缓存名中的所有 key
+    @CacheEvict(cacheNames = "category", key = "'tree'", allEntries = true)
+    public void updateBatchByIdEvict(CategoryEntity[] categories) {
+        this.updateBatchById(Arrays.asList(categories));
+    }
+
+    @Override
+    @CacheEvict(cacheNames = "category", key = "'tree'", allEntries = true)
+    public void saveEvict(CategoryEntity category) {
+        save(category);
+    }
+
+    @Override
+    @CacheEvict(cacheNames = "category", key = "'tree'", allEntries = true)
+    public void updateByIdEvict(CategoryEntity category) {
+        updateById(category);
+    }
+
+    @Override
+    @CacheEvict(cacheNames = "category", key = "'tree'", allEntries = true)
+    public void removeByIdsEvict(List<Long> list) {
+        removeByIds(list);
     }
 
 }

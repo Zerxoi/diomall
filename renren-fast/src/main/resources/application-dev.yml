@@ -4,8 +4,8 @@ spring:
         druid:
             driver-class-name: com.mysql.cj.jdbc.Driver
             url: jdbc:mysql://localhost:3306/diomall_admin?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai
-            username: zouxin
-            password: M!33kobayashi
+            username: zerxoi
+            password: 0201zouxin
             initial-size: 10
             max-active: 100
             min-idle: 10

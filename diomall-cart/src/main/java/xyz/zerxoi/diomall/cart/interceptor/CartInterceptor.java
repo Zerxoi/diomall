@@ -6,7 +6,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 import xyz.zerxoi.common.constant.AuthConstant;
 import xyz.zerxoi.common.constant.CartConstant;
-import xyz.zerxoi.diomall.cart.vo.MemberVo;
+import xyz.zerxoi.common.vo.MemberVo;
 import xyz.zerxoi.diomall.cart.vo.UserInfoTo;
 
 import javax.servlet.http.Cookie;

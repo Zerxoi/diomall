@@ -21,3 +21,6 @@ spring:
           - data-id: redis.yml
             group: dev
             refresh: true
+          - data-id: thymeleaf.yml
+            group: dev
+            refresh: true

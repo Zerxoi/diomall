@@ -30,17 +30,6 @@ public class CategoryController {
 
     @RequestMapping("/list/tree")
     public R listTree() {
-        return R.ok().put("data", categoryService.listTree());
-    }
-
-    @RequestMapping("/update/tree")
-    public R updateTree() {
-        categoryService.updateTree();
-        return R.ok();
-    }
-
-    @RequestMapping("/list/tree/cache")
-    public R listTreeCache() {
         // ValueOperations<String, String> ops = stringRedisTemplate.opsForValue();
         // String categoryTree = ops.get("category_tree");
         // List<CategoryEntity> categoryEntities;
@@ -57,7 +46,6 @@ public class CategoryController {
         return R.ok().put("data", categoryService.listTree());
     }
 
-
     /**
      * 列表
      */
@@ -68,6 +56,15 @@ public class CategoryController {
         return R.ok().put("page", page);
     }
 
+    /**
+     * 批量修改
+     */
+    @RequestMapping("/update/batch")
+    public R updateBatch(@RequestBody CategoryEntity[] categories) {
+        categoryService.updateBatchByIdEvict(categories);
+
+        return R.ok();
+    }
 
     /**
      * 信息
@@ -84,7 +81,7 @@ public class CategoryController {
      */
     @RequestMapping("/save")
     public R save(@RequestBody CategoryEntity category) {
-        categoryService.save(category);
+        categoryService.saveEvict(category);
 
         return R.ok();
     }
@@ -94,7 +91,7 @@ public class CategoryController {
      */
     @RequestMapping("/update")
     public R update(@RequestBody CategoryEntity category) {
-        categoryService.updateById(category);
+        categoryService.updateByIdEvict(category);
 
         return R.ok();
     }
@@ -104,7 +101,7 @@ public class CategoryController {
      */
     @RequestMapping("/delete")
     public R delete(@RequestBody Long[] catIds) {
-        categoryService.removeByIds(Arrays.asList(catIds));
+        categoryService.removeByIdsEvict(Arrays.asList(catIds));
 
         return R.ok();
     }

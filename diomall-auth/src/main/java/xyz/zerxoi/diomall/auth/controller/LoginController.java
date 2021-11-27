@@ -115,7 +115,7 @@ public class LoginController {
             MemberVo memberVo = JSON.parseObject(jsonString, new TypeReference<>() {
             });
             session.setAttribute(AuthConstant.LOGIN_USER, memberVo);
-            return "redirect:http://order.diomall.com/detail.html";
+            return "redirect:http://diomall.com";
         }
         // 如果登录失败显示失败消息，跳转到登陆界面
         return "redirect:http://auth.diomall.com/login.html";

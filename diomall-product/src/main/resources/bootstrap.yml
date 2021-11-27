@@ -24,4 +24,6 @@ spring:
           - dataId: session.yml
             group: dev
             refresh: true
-
+          - dataId: thymeleaf.yml
+            group: dev
+            refresh: true
