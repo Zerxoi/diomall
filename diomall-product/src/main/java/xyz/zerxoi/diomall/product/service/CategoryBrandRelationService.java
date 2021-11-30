@@ -2,8 +2,10 @@ package xyz.zerxoi.diomall.product.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import xyz.zerxoi.common.utils.PageUtils;
+import xyz.zerxoi.diomall.product.entity.BrandEntity;
 import xyz.zerxoi.diomall.product.entity.CategoryBrandRelationEntity;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -16,5 +18,18 @@ import java.util.Map;
 public interface CategoryBrandRelationService extends IService<CategoryBrandRelationEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
+
+    /**
+     * 获取分类关联的品牌
+     * @param catId 分类Id
+     * @return
+     */
+    List<BrandEntity> getBrandsByCatId(Long catId);
+
+    void saveDetail(CategoryBrandRelationEntity categoryBrandRelation);
+
+    void updateCategory(Long catId, String name);
+
+    void updateBrand(Long brandId, String name);
 }
 

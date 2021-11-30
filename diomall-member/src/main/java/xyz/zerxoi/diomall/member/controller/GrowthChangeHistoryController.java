@@ -25,7 +25,7 @@ import xyz.zerxoi.common.utils.R;
  * @date 2021-08-11 23:35:29
  */
 @RestController
-@RequestMapping("memeber/growthchangehistory")
+@RequestMapping("member/growthchangehistory")
 public class GrowthChangeHistoryController {
     @Autowired
     private GrowthChangeHistoryService growthChangeHistoryService;

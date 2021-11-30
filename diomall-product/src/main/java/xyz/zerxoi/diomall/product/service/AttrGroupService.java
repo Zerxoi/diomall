@@ -3,7 +3,10 @@ package xyz.zerxoi.diomall.product.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import xyz.zerxoi.common.utils.PageUtils;
 import xyz.zerxoi.diomall.product.entity.AttrGroupEntity;
+import xyz.zerxoi.diomall.product.vo.AttrGroupVo;
+import xyz.zerxoi.diomall.product.vo.AttrGroupWithAttrsVo;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -16,5 +19,11 @@ import java.util.Map;
 public interface AttrGroupService extends IService<AttrGroupEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
+
+    void removeCascade(List<Long> attrGroupIds);
+
+    AttrGroupVo getAttrGroupInfo(Long attrGroupId);
+
+    List<AttrGroupWithAttrsVo> getAttrGroupWithAttrsByCatelogId(Long catelogId);
 }
 

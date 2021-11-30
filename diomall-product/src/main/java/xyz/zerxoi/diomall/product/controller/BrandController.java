@@ -1,6 +1,7 @@
 package xyz.zerxoi.diomall.product.controller;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,7 +66,7 @@ public class BrandController {
      */
     @RequestMapping("/update")
     public R update(@RequestBody BrandEntity brand) {
-        brandService.updateById(brand);
+        brandService.updateCascade(brand);
 
         return R.ok();
     }
@@ -75,7 +76,7 @@ public class BrandController {
      */
     @RequestMapping("/delete")
     public R delete(@RequestBody Long[] brandIds) {
-        brandService.removeByIds(Arrays.asList(brandIds));
+        brandService.removeCascade(Arrays.asList(brandIds));
 
         return R.ok();
     }

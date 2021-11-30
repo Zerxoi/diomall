@@ -91,7 +91,7 @@ public class CategoryController {
      */
     @RequestMapping("/update")
     public R update(@RequestBody CategoryEntity category) {
-        categoryService.updateByIdEvict(category);
+        categoryService.updateCascade(category);
 
         return R.ok();
     }
@@ -101,7 +101,7 @@ public class CategoryController {
      */
     @RequestMapping("/delete")
     public R delete(@RequestBody Long[] catIds) {
-        categoryService.removeByIdsEvict(Arrays.asList(catIds));
+        categoryService.removeCascade(Arrays.asList(catIds));
 
         return R.ok();
     }

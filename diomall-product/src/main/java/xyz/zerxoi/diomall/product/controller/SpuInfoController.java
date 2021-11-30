@@ -14,6 +14,7 @@ import xyz.zerxoi.common.utils.PageUtils;
 import xyz.zerxoi.common.utils.R;
 import xyz.zerxoi.diomall.product.entity.SpuInfoEntity;
 import xyz.zerxoi.diomall.product.service.SpuInfoService;
+import xyz.zerxoi.diomall.product.vo.SpuSaveVo;
 
 /**
  * spu信息
@@ -53,8 +54,8 @@ public class SpuInfoController {
      * 保存
      */
     @RequestMapping("/save")
-    public R save(@RequestBody SpuInfoEntity spuInfo) {
-        spuInfoService.save(spuInfo);
+    public R save(@RequestBody SpuSaveVo spuInfo) {
+        spuInfoService.saveSpuInfo(spuInfo);
 
         return R.ok();
     }

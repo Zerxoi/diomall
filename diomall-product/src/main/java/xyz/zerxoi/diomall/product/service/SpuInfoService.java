@@ -3,6 +3,7 @@ package xyz.zerxoi.diomall.product.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import xyz.zerxoi.common.utils.PageUtils;
 import xyz.zerxoi.diomall.product.entity.SpuInfoEntity;
+import xyz.zerxoi.diomall.product.vo.SpuSaveVo;
 
 import java.util.Map;
 
@@ -16,5 +17,7 @@ import java.util.Map;
 public interface SpuInfoService extends IService<SpuInfoEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
+
+    void saveSpuInfo(SpuSaveVo spuInfo);
 }
 

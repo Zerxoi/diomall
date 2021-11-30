@@ -4,12 +4,9 @@ import java.util.Arrays;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import xyz.zerxoi.common.to.SkuReductionTo;
 import xyz.zerxoi.common.utils.PageUtils;
 import xyz.zerxoi.common.utils.R;
 import xyz.zerxoi.diomall.coupon.entity.SkuFullReductionEntity;
@@ -76,6 +73,13 @@ public class SkuFullReductionController {
     @RequestMapping("/delete")
     public R delete(@RequestBody Long[] ids) {
         skuFullReductionService.removeByIds(Arrays.asList(ids));
+
+        return R.ok();
+    }
+
+    @PostMapping("/saveinfo")
+    public R saveInfo(@RequestBody SkuReductionTo reductionTo){
+        skuFullReductionService.saveSkuReduction(reductionTo);
 
         return R.ok();
     }

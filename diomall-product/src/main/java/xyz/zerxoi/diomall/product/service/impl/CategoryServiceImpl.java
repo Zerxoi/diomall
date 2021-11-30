@@ -1,28 +1,31 @@
 package xyz.zerxoi.diomall.product.service.impl;
 
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.stereotype.Service;
-
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import xyz.zerxoi.common.utils.PageUtils;
 import xyz.zerxoi.common.utils.Query;
 import xyz.zerxoi.diomall.product.dao.CategoryDao;
+import xyz.zerxoi.diomall.product.entity.CategoryBrandRelationEntity;
 import xyz.zerxoi.diomall.product.entity.CategoryEntity;
+import xyz.zerxoi.diomall.product.service.CategoryBrandRelationService;
 import xyz.zerxoi.diomall.product.service.CategoryService;
+
+import java.util.*;
+import java.util.stream.Collectors;
 
 
 @Service("categoryService")
 public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity> implements CategoryService {
+
+    @Autowired
+    private CategoryBrandRelationService categoryBrandRelationService;
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
@@ -66,15 +69,38 @@ public class CategoryServiceImpl extends ServiceImpl<CategoryDao, CategoryEntity
     }
 
     @Override
+    @Transactional
     @CacheEvict(cacheNames = "category", key = "'tree'", allEntries = true)
-    public void updateByIdEvict(CategoryEntity category) {
+    public void updateCascade(CategoryEntity category) {
         updateById(category);
+        categoryBrandRelationService.updateCategory(category.getCatId(), category.getName());
     }
 
     @Override
+    @Transactional
     @CacheEvict(cacheNames = "category", key = "'tree'", allEntries = true)
-    public void removeByIdsEvict(List<Long> list) {
-        removeByIds(list);
+    public void removeCascade(List<Long> catIds) {
+        removeByIds(catIds);
+        categoryBrandRelationService.remove(new LambdaQueryWrapper<CategoryBrandRelationEntity>()
+                .in(CategoryBrandRelationEntity::getCatelogId, catIds));
     }
 
+
+    @Override
+    public Long[] findCatelogPath(Long catelogId) {
+        List<Long> paths = new ArrayList<>();
+        List<Long> parentPath = findParentPath(catelogId, paths);
+        Collections.reverse(parentPath);
+        return parentPath.toArray(new Long[0]);
+    }
+
+    private List<Long> findParentPath(Long catelogId, List<Long> paths) {
+        // 1. 搜集当前节点Id
+        paths.add(catelogId);
+        CategoryEntity byId = getById(catelogId);
+        if (byId.getParentCid() != 0) {
+            findParentPath(byId.getParentCid(), paths);
+        }
+        return paths;
+    }
 }

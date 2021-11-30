@@ -1,6 +1,7 @@
 package xyz.zerxoi.diomall.coupon.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
+import xyz.zerxoi.common.to.SkuReductionTo;
 import xyz.zerxoi.common.utils.PageUtils;
 import xyz.zerxoi.diomall.coupon.entity.SkuFullReductionEntity;
 
@@ -16,5 +17,7 @@ import java.util.Map;
 public interface SkuFullReductionService extends IService<SkuFullReductionEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
+
+    void saveSkuReduction(SkuReductionTo reductionTo);
 }
 
