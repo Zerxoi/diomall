@@ -14,13 +14,10 @@
 <header>
     <a name="mao1">
         <div class="header">
-
             <ul class="header-left">
                 <li>
-
                     <a href="http://diomall.com">首页</a>
                 </li>
-
             </ul>
             <ul class="header-right">
                 <li th:if="${session.loginUser == null}">
@@ -40,13 +37,11 @@
             </ul>
             <div style="clear: both;"></div>
         </div>
-
     </a>
 </header>
 
 
 <div class="one_search">
-
     <div class="one_sousuo">
         <div class="one_search_top">
             <div class="one_top_left">
@@ -72,9 +67,7 @@
         <div class="One_tabTop">
             <div class="One_Topleft">
                 <span>全部商品 </span>
-
             </div>
-
         </div>
         <div class="One_ShopTop">
             <ul>
@@ -86,7 +79,6 @@
                 <li>操作</li>
             </ul>
         </div>
-
         <div class="One_ShopCon">
             <ul>
                 <li th:each="cartInfo:${cartList}">

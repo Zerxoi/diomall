@@ -1,54 +1,38 @@
 package xyz.zerxoi.diomall.search;
 
-import static xyz.zerxoi.diomall.search.config.ElasticsearchConfig.COMMON_OPTIONS;
-
-import java.io.IOException;
-
-import org.elasticsearch.action.index.IndexRequest;
-import org.elasticsearch.action.search.SearchRequest;
-import org.elasticsearch.action.search.SearchResponse;
-import org.elasticsearch.client.RestHighLevelClient;
-import org.elasticsearch.common.xcontent.XContentType;
-import org.elasticsearch.index.query.QueryBuilders;
-import org.elasticsearch.search.aggregations.AggregationBuilders;
-import org.elasticsearch.search.aggregations.bucket.terms.Terms;
-import org.elasticsearch.search.aggregations.bucket.terms.Terms.Bucket;
-import org.elasticsearch.search.builder.SearchSourceBuilder;
+import co.elastic.clients.elasticsearch.ElasticsearchClient;
+import co.elastic.clients.elasticsearch.core.SearchResponse;
+import lombok.Data;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.alibaba.fastjson.JSON;
-
-import lombok.Data;
+import java.io.IOException;
+import java.math.BigDecimal;
 
 @SpringBootTest
 class DiomallSearchApplicationTests {
 
     @Autowired
-    private RestHighLevelClient restHighLevelClient;
+    private ElasticsearchClient elasticsearchClient;
 
     @Test
     void indexTest() throws IOException {
         User user = new User("lucy", "female", 27);
-        IndexRequest indexRequest = new IndexRequest("users")
-                .id("ir9-QXwBw3XBTsgevjGK")
-                .source(JSON.toJSONString(user), XContentType.JSON);
-        restHighLevelClient.index(indexRequest, COMMON_OPTIONS);
+        elasticsearchClient.create((builder -> builder.index("users").id("ir9-QXwBw3XBTsgevjGK").document(user)));
     }
 
     @Test
     void searchTest() throws IOException {
-        SearchSourceBuilder sourceBuilder = new SearchSourceBuilder();
-        sourceBuilder.query(QueryBuilders.matchQuery("address", "mill"))
-                .aggregation(AggregationBuilders.terms("ageAgg").field("age").size(100)
-                        .subAggregation(AggregationBuilders.avg("balanceAvg").field("balance")));
-        SearchRequest searchRequest = new SearchRequest().indices("accounts").source(sourceBuilder);
-        SearchResponse response = restHighLevelClient.search(searchRequest, COMMON_OPTIONS);
-        Terms ageAgg = response.getAggregations().get("ageAgg");
-        for (Bucket bucket : ageAgg.getBuckets()) {
-            System.out.println(bucket.getKeyAsString());
-        }
+        SearchResponse<Account> search = elasticsearchClient.search(builder -> builder.index("accounts")
+                .query(query -> query.match(match -> match.field("address").query(matchQuery -> matchQuery.stringValue("mill"))))
+                .aggregations("ageAgg", ageAgg -> ageAgg.terms(terms -> terms.field("age").size(100))
+                        .aggregations("balanceAvg", balanceAvg -> balanceAvg.avg(avg -> avg.field("balance")))),
+                Account.class);
+        search.aggregations().forEach((s, aggregate) -> {
+            System.out.println(s);
+            System.out.println(aggregate);
+        });
     }
 
     @Data
@@ -62,5 +46,20 @@ class DiomallSearchApplicationTests {
             this.gender = gender;
             this.age = age;
         }
+    }
+
+    @Data
+    public static class Account {
+        private Long accountNumber;
+        private String address;
+        private Integer age;
+        private BigDecimal balance;
+        private String city;
+        private String email;
+        private String employer;
+        private String firstname;
+        private String lastname;
+        private String gender;
+        private String state;
     }
 }
